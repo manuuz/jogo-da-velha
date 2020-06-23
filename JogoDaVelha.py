@@ -3,7 +3,7 @@ ganhador: int = 0
 
 Player1opcao: str = ''
 Player2opcao: str = ''
-
+#TODO: Mudar nomenclatura menu_entrada
 def MenuEntrada():
     print(f"0. Sair\n" + "1. Jogar")
     Opcao = input()
@@ -34,7 +34,7 @@ def IniciarTabuleiro():
     return tabuleiro
 
 
-def ImprimirTabuleiro(tabuleiro):
+def ImprimirTabuleiro(tabuleiro:List[List]):
     print("-----------")
     print('', tabuleiro[0][0], '|', tabuleiro[0][1], '|', tabuleiro[0][2])
     print('---+---+---')
@@ -43,64 +43,56 @@ def ImprimirTabuleiro(tabuleiro):
     print('', tabuleiro[2][0], '|', tabuleiro[2][1], '|', tabuleiro[2][2])
     print("-----------")
 
-def JogadaPlayer(tabuleiro, PlayerOpcao):
-    Jogada = int(input("\nEscolha sua jogada:"))
+def JogadaPlayer(tabuleiro, player_opcao:str):
+    """
+    Solicita ao
+    """
+    marcou = False
+    while not marcou:
 
-    if Jogada == 1 and tabuleiro[0][0] == '1':
-        tabuleiro[0][0] = PlayerOpcao
+        jogada = int(input("\nEscolha sua jogada:"))
 
-    elif Jogada == 2 and tabuleiro[0][1] == '2':
-        tabuleiro[0][1] = PlayerOpcao
+        #Atividade 1:
+        #Defina a linha e a coluna  a partir da variavel jogada
+        #voce pode usar o int para retornar
+        #apenas a parte inteira do número
+        linha = int(jogada/3)-1
+        coluna = (jogada-1)%3
 
-    elif Jogada == 3 and tabuleiro[0][2] == '3':
-        tabuleiro[0][2] = PlayerOpcao
-
-    elif Jogada == 4 and tabuleiro[1][0] == '4':
-        tabuleiro[1][0] = PlayerOpcao
-
-    elif Jogada == 5 and tabuleiro[1][1] == '5':
-        tabuleiro[1][1] = PlayerOpcao
-
-    elif Jogada == 6 and tabuleiro[1][2] == '6':
-        tabuleiro[1][2] = PlayerOpcao
-
-    elif Jogada == 7 and tabuleiro[2][0] == '7':
-        tabuleiro[2][0] = PlayerOpcao
-
-    elif Jogada == 8 and tabuleiro[2][1] == '8':
-        tabuleiro[2][1] = PlayerOpcao
-
-    elif Jogada == 9 and tabuleiro[2][2] == '9':
-        tabuleiro[2][2] = PlayerOpcao
+        #Atividade 2: faça a marcação caso a posição não esteja marcada
+        if tabuleiro[linha][coluna] != "":
+            marcou = True
+            tabuleiro[linha][coluna] = player_opcao
+        else:
+            print("Posição já marcada!")
+    return linha,coluna
 
 
-def Checagem(tabuleiro, Player1opcao, Player2opcao):
 
-    # COLUNAS
-    global ganhador
+def Checagem(tabuleiro, player_opcao):
+    """
+    Verifica se ha ganhador na rodada
+    """
+    #Atividade 3: Substitua os "None" para checar se o jogador ganhou na LINHA
+    #Dica: tabuleiro[0][1]==tabuleiro[1][2] and tabuleiro[1][2]==tabuleiro[2][2]
+    #       é o mesmo que:  tabuleiro[0][1]==tabuleiro[1][2]==tabuleiro[2][2]
+    for i in None:
+        if None:
+            ganhador = player_opcao
+
+    #Atividade 4: Substitua os "None" para checar se o jogador ganhou na COLUNA
     for i in range(3):
-        if tabuleiro[0][i] == tabuleiro[1][i] == tabuleiro[2][i] == Player1opcao:
-            ganhador = 1
-        elif tabuleiro[0][i] == tabuleiro[1][i] == tabuleiro[2][i] == Player2opcao:
-            ganhador = 2
+        if tabuleiro[i][0] == tabuleiro[i][1] == tabuleiro[i][2] == player_opcao:
+            ganhador = player_opcao
 
-    # LINHAS
-    for i in range(3):
-        if tabuleiro[i][0] == tabuleiro[i][1] == tabuleiro[i][2] == Player1opcao:
-            ganhador = 1
-        elif tabuleiro[i][0] == tabuleiro[i][1] == tabuleiro[i][2] == Player2opcao:
-            ganhador = 2
-
-    # DIAGONAIS
-    if tabuleiro[0][0] == tabuleiro[1][1] == tabuleiro[2][2] == Player1opcao:
-        ganhador = 1
-    elif tabuleiro[0][0] == tabuleiro[1][1] == tabuleiro[2][2] == Player2opcao:
-        ganhador = 2
-
-    if tabuleiro[0][2] == tabuleiro[1][1] == tabuleiro[2][0] == Player1opcao:
-        ganhador = 1
-    elif tabuleiro[0][2] == tabuleiro[1][1] == tabuleiro[2][0] == Player2opcao:
-        ganhador = 2
+    #Atividade 5: Substitua os "None" para checar se o jogador ganhou na DIAGONAL
+    #principal.
+    if None:
+        ganhador = player_opcao
+    #Atividade 5: Substitua os "None" para checar se o jogador ganhou na DIAGONAL
+    #secundária
+    if tabuleiro[0][2] == tabuleiro[1][1] == tabuleiro[2][0] == player_opcao:
+        ganhador = player_opcao
 
     return ganhador
 
@@ -112,28 +104,50 @@ def Partida():
 
     tabuleiro = IniciarTabuleiro()
     ImprimirTabuleiro(tabuleiro)
-
+    ganhador = 0
     while ganhador == 0:
-        JogadaPlayer(tabuleiro, Player1opcao)
-        ImprimirTabuleiro(tabuleiro)
-        Checagem(tabuleiro, Player1opcao, Player2opcao)
-        if ganhador != 0:
-            print(f"O player", ganhador, "ganhou!\n")
-            break
+        arr_player_opcao = [Player1opcao,Player2opcao]
 
-        JogadaPlayer(tabuleiro, Player2opcao)
-        ImprimirTabuleiro(tabuleiro)
-        Checagem(tabuleiro, Player1opcao, Player2opcao)
-        contador_velha += 1
-        if ganhador != 0:
-            print(f"O player", ganhador, "ganhou!\n")
-            break
-        elif ganhador == 0 and contador_velha == 6:
-            print(f"Deu velha !!!\n")
-            break
+        for player_opcao in arr_player_opcao:
+            #Atividade 6: invoque os métodos jogada_player, imprimir tabuleiro e
+            #checagem apropridadamente
+            JogadaPlayer(tabuleiro, player_opcao)
+            ImprimirTabuleiro(tabuleiro)
+            ganhador = Checagem(tabuleiro, player_opcao)
+
+
+            ####Fim do seu codigo :)###
+            contador_velha += 1
+            if ganhador != 0:
+                print(f"O player", ganhador, "ganhou!\n")
+                break
+            elif ganhador == 0 and contador_velha == 9:
+                print(f"Deu velha !!!\n")
+                break
 
 
 if __name__ == '__main__':
+    #TABULEIRO PARA TESTES
+    """
+    tabuleiro = [['o', '2', '3'],
+                 ['4', 'o', '6'],
+                 ['7', '8', 'x']]
+    """
+
+
+
+    #Teste de checagem
+    #print(JogadaPlayer(tabuleiro, player_opcao:str))
+
+    #Teste de checagem
+    """
+    print(Checagem(tabuleiro,"o"))
+    print(Checagem(tabuleiro,"x"))
+    """
+
+    #Código principal
+    """
     while MenuEntrada():
         Partida()
     print("Fim do Jogo!")
+    """
