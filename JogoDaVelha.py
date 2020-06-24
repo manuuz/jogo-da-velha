@@ -1,3 +1,5 @@
+from typing import List
+
 def menu_entrada():
     '''
     Função inicial que mostra opções que o player pode escolher
@@ -72,7 +74,7 @@ def jogada_player(tabuleiro, player_opcao:str):
 
         #Atividade 2: faça a marcação caso a posição não esteja marcada
         #substitua os 'None'
-        if tabuleiro[linha][coluna] != none:
+        if tabuleiro[linha][coluna] != None:
             marcado = None
         else:
             print()
@@ -146,23 +148,23 @@ def partida():
 if __name__ == '__main__':
     #TABULEIRO PARA TESTES
     """
-    tabuleiro = [['o', 'x', 'x'],
-                 ['4', 'o', '6'],
-                 ['7', '8', 'o']]
+    tabuleiro = [['O', 'X', 'X'],
+                 ['4', 'O', '6'],
+                 ['7', '8', 'O']]
                  
-    tabuleiro = [['o', 'x', 'x'],
-                 ['4', 'o', 'x'],
-                 ['7', '8', 'x']]
+    tabuleiro = [['O', 'X', 'X'],
+                 ['4', 'o', 'X'],
+                 ['7', '8', 'X']]
                  
     etc
     """
 
     #Teste de checagem
-    #print(JogadaPlayer(tabuleiro, player_opcao:str))
+    #print(jogada_player(tabuleiro, player_opcao:str))
 
     #Teste de checagem
-    #print(Checagem(tabuleiro,"O"))
-    #print(Checagem(tabuleiro,"X"))
+    #print(chegagem_ganhador(tabuleiro,"O"))
+    #print(chegagem_ganhador(tabuleiro,"X"))
 
 
     #Código principal
